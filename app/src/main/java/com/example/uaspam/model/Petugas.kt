@@ -9,3 +9,10 @@ data class Petugas(
     val jabatan: String,
 )
 
+@Serializable
+data class PetugasDetailResponse (
+    val status: Boolean,
+    val message: String,
+    val data3: Petugas
+)
+
