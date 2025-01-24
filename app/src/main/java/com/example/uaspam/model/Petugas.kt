@@ -16,3 +16,10 @@ data class PetugasDetailResponse (
     val data3: Petugas
 )
 
+@Serializable
+data class PetugasResponse (
+    val status: Boolean,
+    val message: String,
+    val data3: List<Petugas>
+)
+
