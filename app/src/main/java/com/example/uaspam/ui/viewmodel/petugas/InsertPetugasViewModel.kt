@@ -31,6 +31,10 @@ fun InsertPUiEvent.toPtg(): Petugas = Petugas(
     jabatan = jabatan,
 )
 
+fun Petugas.toUiStatePtg(): InsertPUiState = InsertPUiState(
+    insertPUiEvent = toInsertPUiEvent()
+)
+
 fun Petugas.toInsertPUiEvent(): InsertPUiEvent = InsertPUiEvent(
     Id_petugas = Id_petugas,
     Nama_petugas = Nama_petugas,
