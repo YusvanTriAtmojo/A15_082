@@ -1,5 +1,7 @@
 package com.example.uaspam.ui.viewmodel.hewan
 
+import com.example.uaspam.model.Hewan
+
 data class InsertUiState(
     val insertUiEvent: InsertUiEvent = InsertUiEvent(),
     var isEntryValid: FormErrorStatehwn = FormErrorStatehwn(),
@@ -25,4 +27,12 @@ data class InsertUiEvent(
     val Tipe_pakan: String = "",
     val populasi: Int = 0,
     val Zona_wilayah: String = "",
+)
+
+fun InsertUiEvent.toHwn(): Hewan = Hewan(
+    Id_hewan = Id_hewan,
+    Nama_hewan = Nama_hewan,
+    Tipe_pakan = Tipe_pakan,
+    populasi = populasi,
+    Zona_wilayah = Zona_wilayah,
 )
