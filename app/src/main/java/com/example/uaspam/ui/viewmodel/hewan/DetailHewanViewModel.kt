@@ -45,4 +45,15 @@ class DetailHewanViewModel(
             }
         }
     }
+    fun deleteHwn(id: String){
+        viewModelScope.launch {
+            try {
+                hwn.deleteHewan(id)
+            } catch (e: IOException){
+                DetailHUiState.Error
+            } catch (e: HttpException) {
+                DetailHUiState.Error
+            }
+        }
+    }
 }
