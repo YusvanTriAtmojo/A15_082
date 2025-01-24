@@ -36,3 +36,12 @@ fun InsertUiEvent.toHwn(): Hewan = Hewan(
     populasi = populasi,
     Zona_wilayah = Zona_wilayah,
 )
+
+fun Hewan.toInsertUiEvent(): InsertUiEvent = InsertUiEvent(
+    Id_hewan = Id_hewan,
+    Nama_hewan = Nama_hewan,
+    Tipe_pakan = Tipe_pakan,
+    populasi = populasi,
+    Zona_wilayah = Zona_wilayah,
+)
+
