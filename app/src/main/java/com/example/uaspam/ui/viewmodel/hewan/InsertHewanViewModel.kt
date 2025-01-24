@@ -37,6 +37,10 @@ fun InsertUiEvent.toHwn(): Hewan = Hewan(
     Zona_wilayah = Zona_wilayah,
 )
 
+fun Hewan.toUiStateHwn(): InsertUiState = InsertUiState(
+    insertUiEvent = toInsertUiEvent()
+)
+
 fun Hewan.toInsertUiEvent(): InsertUiEvent = InsertUiEvent(
     Id_hewan = Id_hewan,
     Nama_hewan = Nama_hewan,
