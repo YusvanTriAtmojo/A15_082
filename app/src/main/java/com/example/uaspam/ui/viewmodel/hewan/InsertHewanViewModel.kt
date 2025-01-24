@@ -1,6 +1,10 @@
 package com.example.uaspam.ui.viewmodel.hewan
 
-
+data class InsertUiState(
+    val insertUiEvent: InsertUiEvent = InsertUiEvent(),
+    var isEntryValid: FormErrorStatehwn = FormErrorStatehwn(),
+    val snackBarMessage: String? = null,
+)
 
 data class FormErrorStatehwn(
     val Id_hewan: String? = null,
