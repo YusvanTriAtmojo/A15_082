@@ -36,4 +36,12 @@ class HewanContainer: AppContainer {
     override val hewanRepository: HewanRepository by lazy {
         NetworkHewanRepository(hewanService)
     }
+
+    private val petugasService: PetugasService by lazy {
+        retrofit.create(PetugasService::class.java)
+    }
+
+    override val petugasRepository: PetugasRepository by lazy {
+        NetworkPetugasRepository(petugasService)
+    }
 }
