@@ -2,10 +2,12 @@ package com.example.uaspam.ui.view.hewan
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.uaspam.model.Hewan
+import com.example.uaspam.ui.viewmodel.hewan.HomeHUiState
+
+@Composable
+fun HomeHwnStatus(
+    homeHUiState: HomeHUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    searchText: String,
+    onDetailClick: (String) -> Unit
+) {
+    Card ( colors = CardDefaults.cardColors(containerColor = Color(0xB301A58B))){
+        when (homeHUiState) {
+            is HomeHUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+            is HomeHUiState.Success -> {
+                val filteredHewan = homeHUiState.hewan.filter {
+                    it.Nama_hewan.contains(searchText, ignoreCase = true)
+                }
+                if (filteredHewan.isEmpty()) {
+                    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "Tidak ada data Hewan")
+                    }
+                } else {
+                    HwnLayout(
+                        hewan = filteredHewan,
+                        modifier = modifier.fillMaxWidth(),
+                        onDetailClick = { onDetailClick(it.Id_hewan) },
+                    )
+                }
+            }
+            is HomeHUiState.Error -> OnError(retryAction, modifier = Modifier.fillMaxSize())
+        }
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
