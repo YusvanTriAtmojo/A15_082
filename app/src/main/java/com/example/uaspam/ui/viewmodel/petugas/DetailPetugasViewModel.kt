@@ -10,6 +10,7 @@ import com.example.uaspam.model.PetugasDetailResponse
 import com.example.uaspam.repository.PetugasRepository
 import com.example.uaspam.ui.navigation.DestinasiDetailPetugas
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.IOException
 
 sealed class DetailPUiState {
@@ -42,4 +43,16 @@ class DetailPetugasViewModel(
             }
         }
     }
+    fun deletePtg(id: String){
+        viewModelScope.launch {
+            try {
+                ptg.deletePetugas(id)
+            } catch (e: IOException){
+                DetailPUiState.Error
+            } catch (e: HttpException) {
+                DetailPUiState.Error
+            }
+        }
+    }
+
 }
