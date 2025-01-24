@@ -16,3 +16,10 @@ data class HewanDetailResponse (
     val message: String,
     val data1: Hewan
 )
+@Serializable
+data class HewanResponse (
+    val status: Boolean,
+    val message: String,
+    val data1: List<Hewan>
+)
+
