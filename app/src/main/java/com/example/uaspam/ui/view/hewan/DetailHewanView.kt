@@ -3,6 +3,7 @@ package com.example.uaspam.ui.view.hewan
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +27,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uaspam.model.Hewan
 import com.example.uaspam.model.HewanDetailResponse
+import com.example.uaspam.ui.viewmodel.hewan.DetailHUiState
+
+@Composable
+fun DetailHewanStatus(
+    retryAction:() -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (String) -> Unit,
+    detailHUiState: DetailHUiState
+){
+    var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+    var hewanIdToDelete by rememberSaveable { mutableStateOf("") }
+    when(detailHUiState){
+        is DetailHUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is DetailHUiState.Success -> {
+            ItemDetailHwn(
+                hewan = detailHUiState.hewan,
+                onDeleteClick = {
+                    hewanIdToDelete = detailHUiState.hewan.data1.Id_hewan
+                    deleteConfirmationRequired = true
+                },
+
+                modifier = modifier.fillMaxWidth()
+            )
+        }
+        is DetailHUiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+    if (deleteConfirmationRequired) {
+        DeleteConfirmationDialog(
+            onDeleteConfirm = {
+                deleteConfirmationRequired = false
+                onDeleteClick(hewanIdToDelete)
+            },
+            onDeleteCancel = { deleteConfirmationRequired = false },
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
 
 @Composable
 fun ItemDetailHwn(
