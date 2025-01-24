@@ -1,5 +1,7 @@
 package com.example.uaspam.ui.viewmodel.petugas
 
+import com.example.uaspam.model.Petugas
+
 
 data class InsertPUiState(
     val insertPUiEvent: InsertPUiEvent = InsertPUiEvent(),
@@ -22,3 +24,10 @@ data class InsertPUiEvent(
     val Nama_petugas: String = "",
     val jabatan: String = "",
 )
+
+fun InsertPUiEvent.toPtg(): Petugas = Petugas(
+    Id_petugas = Id_petugas,
+    Nama_petugas = Nama_petugas,
+    jabatan = jabatan,
+)
+
