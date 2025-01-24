@@ -1,5 +1,12 @@
 package com.example.uaspam.ui.viewmodel.petugas
 
+
+data class InsertPUiState(
+    val insertPUiEvent: InsertPUiEvent = InsertPUiEvent(),
+    var isEntryValid: FormErrorStateptg = FormErrorStateptg(),
+    val snackBarMessage: String? = null,
+)
+
 data class FormErrorStateptg(
     val Id_petugas: String? = null,
     val Nama_petugas: String? = null,
