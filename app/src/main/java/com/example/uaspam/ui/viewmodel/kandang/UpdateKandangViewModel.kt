@@ -24,8 +24,8 @@ class UpdateKandangViewModel(
 
     init {
         viewModelScope.launch {
-            updateKdgUIState = repositoryKdg.getKandangbyId(idk)
-                .data2.toUiStateKdg()
+            val kandangWithHewan = repositoryKdg.getKandangbyId(idk).data2
+            updateKdgUIState = kandangWithHewan.toKandang().toUiStateKdg()
         }
     }
 
