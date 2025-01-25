@@ -20,6 +20,7 @@ import retrofit2.Retrofit
 interface AppContainer{
     val hewanRepository: HewanRepository
     val petugasRepository: PetugasRepository
+    val kandangRepository: KandangRepository
 }
 
 class HewanContainer: AppContainer {
@@ -43,5 +44,13 @@ class HewanContainer: AppContainer {
 
     override val petugasRepository: PetugasRepository by lazy {
         NetworkPetugasRepository(petugasService)
+    }
+
+    private val kandangService: KandangService by lazy {
+        retrofit.create(KandangService::class.java)
+    }
+
+    override val kandangRepository: KandangRepository by lazy {
+        NetworkKandangRepository(kandangService)
     }
 }
