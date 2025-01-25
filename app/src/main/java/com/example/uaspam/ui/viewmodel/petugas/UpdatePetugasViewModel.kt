@@ -6,8 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.uaspam.model.Kandang
-import com.example.uaspam.model.KandangHewan
 import com.example.uaspam.repository.PetugasRepository
 import com.example.uaspam.ui.navigation.DestinasiUpdatePetugas
 import kotlinx.coroutines.launch
@@ -66,13 +64,4 @@ class UpdatePetugasViewModel(
     fun resetSnackBarMessage(){
         updatePtgUIState = updatePtgUIState.copy(snackBarMessage = null)
     }
-}
-
-fun KandangHewan.toKandang(): Kandang {
-    return Kandang(
-        Id_kandang = this.Id_kandang,
-        Id_hewan = this.Id_hewan,
-        kapasitas = this.kapasitas,
-        lokasi = this.lokasi
-    )
 }
