@@ -57,3 +57,27 @@ object DestinasiUpdatePetugas : DestinasiNavigasi {
     const val IDP = "Id_petugas"
     val routesWithArg = "$route/{$IDP}"
 }
+
+object DestinasiHomeKandang : DestinasiNavigasi{
+    override val route = "homeKdg"
+    override val titleRes = "Home Kandang"
+}
+
+object DestinasiInsertKandang : DestinasiNavigasi {
+    override val route = "insertKdg"
+    override val titleRes = "Entry Kandang"
+}
+
+object DestinasiDetailKandang : DestinasiNavigasi {
+    override val route: String = "detailKdg"
+    override val titleRes: String = "Detail Kandang"
+    const val IDK = "Id_kandang"
+    val routesWithArg = "$route/{$IDK}"
+}
+
+object DestinasiUpdateKandang : DestinasiNavigasi {
+    override val route: String = "updatekdg"
+    override val titleRes: String = "Update Kandang"
+    const val IDK = "Id_kandang"
+    val routesWithArg = "$route/{$IDK}"
+}
