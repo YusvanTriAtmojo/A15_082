@@ -34,3 +34,11 @@ fun InsertKUiEvent.toKdg(): Kandang = Kandang(
     lokasi = lokasi,
 )
 
+fun Kandang.toInsertKUiEvent(): InsertKUiEvent = InsertKUiEvent(
+    Id_kandang = Id_kandang,
+    Id_hewan = Id_hewan,
+    kapasitas = kapasitas,
+    lokasi = lokasi,
+)
+
+
