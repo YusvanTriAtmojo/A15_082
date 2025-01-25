@@ -38,7 +38,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uaspam.data.Jabatan
+import com.example.uaspam.data.TipePakan
 import com.example.uaspam.ui.customwidget.CostumeTopAppBar
+import com.example.uaspam.ui.customwidget.DynamicRadioButton
 import com.example.uaspam.ui.customwidget.DynamicSelectedTextField
 import com.example.uaspam.ui.navigation.DestinasiInsertHewan
 import com.example.uaspam.ui.viewmodel.PenyediaViewModel
@@ -172,7 +174,7 @@ fun FormInput(
     onValueChange: (InsertPUiEvent) -> Unit = {},
     enabled: Boolean = true
 ) {
-    var chosenDropdown by remember {
+    var pilihJabatan by remember {
         mutableStateOf(
             ""
         )
@@ -180,7 +182,7 @@ fun FormInput(
 
     LaunchedEffect(insertPUiEvent.jabatan) {
         if (insertPUiEvent.jabatan.isNotEmpty()) {
-            chosenDropdown = insertPUiEvent.jabatan
+            pilihJabatan = insertPUiEvent.jabatan
         }
     }
 
@@ -217,14 +219,13 @@ fun FormInput(
             text = errorState.Nama_petugas ?: "",
             color = Color.Red
         )
-        DynamicSelectedTextField(
-            selectedValue = chosenDropdown,
+        DynamicRadioButton(
             options = Jabatan.listJabatan,
-            label = "Jabatan",
-            onValueChangedEvent = {
-                chosenDropdown = it
+            selectedOption = pilihJabatan,
+            onOptionSelected = {
+                pilihJabatan = it
                 onValueChange(insertPUiEvent.copy(jabatan = it))
-            },
+            }
         )
         Text(
             text = errorState.jabatan ?: "",
