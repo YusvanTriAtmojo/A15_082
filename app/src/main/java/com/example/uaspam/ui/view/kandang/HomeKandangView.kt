@@ -2,10 +2,12 @@ package com.example.uaspam.ui.view.kandang
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.uaspam.model.Kandang
+import com.example.uaspam.ui.viewmodel.kandang.HomeKUiState
+
+@Composable
+fun HomeKdgStatus(
+    homeKUiState: HomeKUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    searchText: String,
+    onDetailClick: (String) -> Unit
+) {
+    Card (colors = CardDefaults.cardColors(containerColor = Color(0xFF01A58B))){
+        when (homeKUiState) {
+            is HomeKUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+            is HomeKUiState.Success -> {
+                val filteredKandang = homeKUiState.kandang.filter {
+                    it.Id_kandang.contains(searchText, ignoreCase = true)
+                }
+                if (filteredKandang.isEmpty()) {
+                    Box (modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "Tidak ada data Kandang")
+                    }
+                } else {
+                    KdgLayout(
+                        kandang = filteredKandang,
+                        modifier = modifier.fillMaxWidth(),
+                        onDetailClick = { onDetailClick(it.Id_kandang) },
+                    )
+                }
+            }
+            is HomeKUiState.Error -> OnError(retryAction, modifier = Modifier.fillMaxSize())
+        }
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
