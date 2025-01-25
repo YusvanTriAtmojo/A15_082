@@ -200,8 +200,9 @@ fun FormInput(
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            text = errorState.Id_hewan ?: "",
-            color = Color.Red
+            text = "ID Terisi Otomatis",
+            color = Color.Black,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         OutlinedTextField(
             value = insertUiEvent.Nama_hewan,
@@ -226,6 +227,9 @@ fun FormInput(
         Text(
             text = errorState.Nama_hewan ?: "",
             color = Color.Red
+        )
+        Text(
+            text = "Tipe Pakan"
         )
         DynamicRadioButton(
             options = TipePakan.listPakan,
@@ -268,6 +272,9 @@ fun FormInput(
         Text(
             text = errorState.populasi?: "",
             color = Color.Red
+        )
+        Text(
+            text = "Zona Wilayah"
         )
         DynamicRadioButton(
             options = DaftarZona.listZona,
