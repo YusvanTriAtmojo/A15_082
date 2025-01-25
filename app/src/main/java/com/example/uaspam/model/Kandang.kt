@@ -14,7 +14,7 @@ data class Kandang(
 data class KandangDetailResponse (
     val status: Boolean,
     val message: String,
-    val data2: Kandang,
+    val data2: KandangHewan,
 )
 
 @Serializable
