@@ -188,29 +188,10 @@ fun FormInput(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        OutlinedTextField(
-            value = insertPUiEvent.Id_petugas,
-            onValueChange = { onValueChange(insertPUiEvent.copy(Id_petugas = it))},
-            label = { Text("Id Petugas") },
-            isError = errorState.Id_petugas != null,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            shape = RoundedCornerShape(50.dp),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = ""
-                )
-            }
-        )
         Text(
-            text = errorState.Id_petugas ?: "",
-            color = Color.Red
+            text = "ID Terisi Otomatis",
+            color = Color.Black,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         OutlinedTextField(
             value = insertPUiEvent.Nama_petugas,
