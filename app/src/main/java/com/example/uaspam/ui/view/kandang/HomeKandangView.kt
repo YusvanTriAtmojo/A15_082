@@ -3,6 +3,7 @@ package com.example.uaspam.ui.view.kandang
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
@@ -25,6 +28,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.uaspam.model.Kandang
+
+@Composable
+fun KdgLayout(
+    kandang: List<Kandang>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Kandang) -> Unit,
+){
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(15.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ){
+        items(kandang) {kdg ->
+            KdgCard(
+                kandang = kdg,
+                onDetailClick = { onDetailClick(kdg) },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
 
 @Composable
 fun KdgCard(
