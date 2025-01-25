@@ -19,7 +19,6 @@ class InsertPetugasViewModel(private val ptg: PetugasRepository): ViewModel() {
     private fun validateFields(): Boolean {
         val event = uiState.insertPUiEvent
         val errorState = FormErrorStateptg(
-            Id_petugas = if (event.Id_petugas.isNotEmpty()) null else "ID tidak boleh kosong",
             Nama_petugas = if (event.Nama_petugas.isNotEmpty()) null else "Nama tidak boleh kosong",
             jabatan = if (event.jabatan.isNotEmpty()) null else "Jabatan tidak boleh kosong",
         )
