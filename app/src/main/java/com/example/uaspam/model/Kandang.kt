@@ -16,3 +16,10 @@ data class KandangDetailResponse (
     val message: String,
     val data2: Kandang,
 )
+
+@Serializable
+data class KandangResponse (
+    val status: Boolean,
+    val message: String,
+    val data2: List<Kandang>
+)
