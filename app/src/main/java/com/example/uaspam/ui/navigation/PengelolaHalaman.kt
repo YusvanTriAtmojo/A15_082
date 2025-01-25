@@ -13,6 +13,10 @@ import com.example.uaspam.ui.view.hewan.DetailHewanScreen
 import com.example.uaspam.ui.view.hewan.EntryHwnScreen
 import com.example.uaspam.ui.view.hewan.HomeHewanScreen
 import com.example.uaspam.ui.view.hewan.UpdateHewanView
+import com.example.uaspam.ui.view.petugas.DetailPetugasScreen
+import com.example.uaspam.ui.view.petugas.EntryPtgScreen
+import com.example.uaspam.ui.view.petugas.HomePetugasScreen
+import com.example.uaspam.ui.view.petugas.UpdatePetugasView
 
 @Composable
 fun PengelolaHalaman(navController: NavHostController = rememberNavController()){
@@ -27,13 +31,11 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                     navController.navigate(DestinasiHomeHewan.route)
                 },
                 keKandang = {
-
                 },
                 kePetugas = {
-
+                    navController.navigate(DestinasiHomePetugas.route)
                 },
                 keMonitoring = {
-
                 },
             )
         }
@@ -99,6 +101,71 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
             UpdateHewanView(
                 navigateBack = {navController.popBackStack()},
                 navigate = {navController.popBackStack()}
+            )
+        }
+
+        composable(
+            route = DestinasiHomePetugas.route
+        ) {
+            HomePetugasScreen(
+                navigateBack = {navController.popBackStack()},
+                navigateToItemEntry = {navController.navigate(DestinasiInsertPetugas.route)},
+                onDetailClick = { id ->
+                    navController.navigate(("${DestinasiDetailPetugas.route}/$id"))
+                }
+            )
+        }
+        composable(DestinasiInsertPetugas.route){
+            EntryPtgScreen(navigateBack = {
+                navController.navigate(DestinasiHomePetugas.route){
+                    popUpTo(DestinasiHomePetugas.route){
+                        inclusive = true
+                    }
+                }
+            })
+        }
+
+        composable(
+            DestinasiDetailPetugas.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailPetugas.IDP){
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id = it.arguments?.getString(DestinasiDetailPetugas.IDP)
+            id?.let{
+                DetailPetugasScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomePetugas.route){
+                            popUpTo(DestinasiHomePetugas.route){
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onEditClick = {
+                        navController.navigate("${DestinasiUpdatePetugas.route}/$id")
+                    },
+                    onDeleteClick = {
+                        navController.navigate(DestinasiHomePetugas.route) {
+                            popUpTo(DestinasiHomePetugas.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
+        }
+        composable(
+            DestinasiUpdatePetugas.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePetugas.IDP){
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdatePetugasView(
+                navigateBack = {navController.popBackStack()},
             )
         }
     }
