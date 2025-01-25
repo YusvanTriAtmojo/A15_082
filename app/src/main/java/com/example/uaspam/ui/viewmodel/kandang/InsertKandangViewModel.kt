@@ -41,4 +41,9 @@ fun Kandang.toInsertKUiEvent(): InsertKUiEvent = InsertKUiEvent(
     lokasi = lokasi,
 )
 
+fun Kandang.toUiStateKdg(): InsertKUiState = InsertKUiState(
+    insertKUiEvent = toInsertKUiEvent()
+)
+
+
 
