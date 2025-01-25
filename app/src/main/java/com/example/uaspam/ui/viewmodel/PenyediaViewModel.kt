@@ -10,6 +10,10 @@ import com.example.uaspam.ui.viewmodel.hewan.DetailHewanViewModel
 import com.example.uaspam.ui.viewmodel.hewan.HomeHewanViewModel
 import com.example.uaspam.ui.viewmodel.hewan.InsertHewanViewModel
 import com.example.uaspam.ui.viewmodel.hewan.UpdateHewanViewModel
+import com.example.uaspam.ui.viewmodel.kandang.DetailKandangViewModel
+import com.example.uaspam.ui.viewmodel.kandang.HomeKandangViewModel
+import com.example.uaspam.ui.viewmodel.kandang.InsertKandangViewModel
+import com.example.uaspam.ui.viewmodel.kandang.UpdateKandangViewModel
 import com.example.uaspam.ui.viewmodel.petugas.DetailPetugasViewModel
 import com.example.uaspam.ui.viewmodel.petugas.HomePetugasViewModel
 import com.example.uaspam.ui.viewmodel.petugas.InsertPetugasViewModel
@@ -58,6 +62,28 @@ object PenyediaViewModel {
         initializer {
             UpdatePetugasViewModel(
                 aplikasiHwn().container.petugasRepository,
+                createSavedStateHandle(),
+            )
+        }
+        initializer {
+            HomeKandangViewModel(
+                aplikasiHwn().container.kandangRepository
+            )
+        }
+        initializer {
+            InsertKandangViewModel(
+                aplikasiHwn().container.kandangRepository
+            )
+        }
+        initializer {
+            DetailKandangViewModel(
+                createSavedStateHandle(),
+                aplikasiHwn().container.kandangRepository
+            )
+        }
+        initializer {
+            UpdateKandangViewModel(
+                aplikasiHwn().container.kandangRepository,
                 createSavedStateHandle(),
             )
         }
