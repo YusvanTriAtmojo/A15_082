@@ -1,5 +1,7 @@
 package com.example.uaspam.ui.viewmodel.kandang
 
+import com.example.uaspam.model.Kandang
+
 data class InsertKUiState(
     val insertKUiEvent: InsertKUiEvent = InsertKUiEvent(),
     var isEntryValid: FormErrorStatekdg = FormErrorStatekdg(),
@@ -24,3 +26,11 @@ data class InsertKUiEvent(
     val kapasitas: Int = 0,
     val lokasi: String = "",
 )
+
+fun InsertKUiEvent.toKdg(): Kandang = Kandang(
+    Id_kandang = Id_kandang,
+    Id_hewan = Id_hewan,
+    kapasitas = kapasitas,
+    lokasi = lokasi,
+)
+
