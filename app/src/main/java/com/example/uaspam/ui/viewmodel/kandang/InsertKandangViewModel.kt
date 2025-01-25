@@ -1,5 +1,11 @@
 package com.example.uaspam.ui.viewmodel.kandang
 
+data class InsertKUiState(
+    val insertKUiEvent: InsertKUiEvent = InsertKUiEvent(),
+    var isEntryValid: FormErrorStatekdg = FormErrorStatekdg(),
+    val snackBarMessage: String? = null,
+)
+
 data class FormErrorStatekdg(
     val Id_kandang: String? = null,
     val Id_hewan: String? = null,
