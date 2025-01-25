@@ -18,6 +18,15 @@ data class KandangDetailResponse (
 )
 
 @Serializable
+data class KandangHewan(
+    val Id_kandang: String,
+    val Id_hewan: String,
+    val Nama_hewan: String,
+    val kapasitas: Int,
+    val lokasi: String
+)
+
+@Serializable
 data class KandangResponse (
     val status: Boolean,
     val message: String,
