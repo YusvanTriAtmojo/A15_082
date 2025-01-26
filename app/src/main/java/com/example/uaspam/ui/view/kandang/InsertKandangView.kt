@@ -18,24 +18,89 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uaspam.data.DaftarHewan
+import com.example.uaspam.ui.customwidget.CostumeTopAppBar
 import com.example.uaspam.ui.customwidget.DynamicSelectedTextField
+import com.example.uaspam.ui.navigation.DestinasiInsertKandang
+import com.example.uaspam.ui.viewmodel.PenyediaViewModel
 import com.example.uaspam.ui.viewmodel.kandang.FormErrorStatekdg
 import com.example.uaspam.ui.viewmodel.kandang.InsertKUiEvent
 import com.example.uaspam.ui.viewmodel.kandang.InsertKUiState
+import com.example.uaspam.ui.viewmodel.kandang.InsertKandangViewModel
+import kotlinx.coroutines.launch
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EntryKdgScreen(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertKandangViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val uiState = viewModel.uiState
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    LaunchedEffect(uiState.snackBarMessage) {
+        uiState.snackBarMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message)
+                viewModel.resetSnackBarMessage()
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiInsertKandang.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ) { innerPadding ->
+        EntryBody(
+            additionalText = "Harap Isi Semua Data !",
+            insertKUiState = viewModel.uiState,
+            onKandangValueChange = viewModel::InsertKdgState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertKdg()
+                    navigateBack()
+                }
+            },
+            onCancelClick = {
+                navigateBack()
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxWidth()
+        )
+    }
+}
 
 @Composable
 fun EntryBody(
