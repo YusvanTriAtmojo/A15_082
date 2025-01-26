@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.uaspam.model.KandangDetailResponse
 import com.example.uaspam.repository.KandangRepository
 import com.example.uaspam.ui.navigation.DestinasiDetailKandang
+import com.example.uaspam.ui.viewmodel.petugas.DetailPUiState
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.IOException
 
 sealed class DetailKUiState {
@@ -38,6 +40,17 @@ class DetailKandangViewModel(
                 val kandang = kdg.getKandangbyId(id)
                 DetailKUiState.Success(kandang)
             } catch (e: IOException){
+                DetailKUiState.Error
+            }
+        }
+    }
+    fun deleteKdg(id: String){
+        viewModelScope.launch {
+            try {
+                kdg.deleteKandang(id)
+            } catch (e: IOException){
+                DetailKUiState.Error
+            } catch (e: HttpException) {
                 DetailKUiState.Error
             }
         }
