@@ -188,29 +188,10 @@ fun FormInput(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        OutlinedTextField(
-            value = insertKUiEvent.Id_kandang,
-            onValueChange = { onValueChange(insertKUiEvent.copy(Id_kandang = it))},
-            label = { Text("Id Kandang") },
-            isError = errorState.Id_kandang != null,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            shape = RoundedCornerShape(50.dp),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = ""
-                )
-            }
-        )
         Text(
-            text = errorState.Id_kandang ?: "",
-            color = Color.Red
+            text = "ID Terisi Otomatis",
+            color = Color.Black,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         DynamicSelectedTextField(
             selectedValue = pilihHewan,
