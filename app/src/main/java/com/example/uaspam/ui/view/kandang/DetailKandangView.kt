@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +33,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uaspam.model.KandangDetailResponse
 import com.example.uaspam.model.KandangHewan
+import com.example.uaspam.ui.viewmodel.kandang.DetailKUiState
+
+@Composable
+fun DetailKandangStatus(
+    retryAction:() -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (String) -> Unit,
+    onEditClick: () -> Unit,
+    detailKUiState: DetailKUiState
+){
+    var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+    var kandangIdToDelete by rememberSaveable { mutableStateOf("") }
+    when(detailKUiState){
+        is DetailKUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is DetailKUiState.Success -> {
+            ItemDetailKdg(
+                kandang = detailKUiState.kandang,
+                onDeleteClick = {
+                    kandangIdToDelete = detailKUiState.kandang.data2.Id_kandang
+                    deleteConfirmationRequired = true
+                },
+                onEditClick = onEditClick,
+                modifier = modifier.fillMaxWidth()
+            )
+        }
+        is DetailKUiState.Error -> OnError(
+            retryAction,
+            modifier = modifier.fillMaxSize()
+        )
+    }
+    if (deleteConfirmationRequired) {
+        DeleteConfirmationDialog(
+            onDeleteConfirm = {
+                deleteConfirmationRequired = false
+                onDeleteClick(kandangIdToDelete)
+            },
+            onDeleteCancel = { deleteConfirmationRequired = false },
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
 
 @Composable
 fun ItemDetailKdg(
