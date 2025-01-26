@@ -13,6 +13,10 @@ import com.example.uaspam.ui.view.hewan.DetailHewanScreen
 import com.example.uaspam.ui.view.hewan.EntryHwnScreen
 import com.example.uaspam.ui.view.hewan.HomeHewanScreen
 import com.example.uaspam.ui.view.hewan.UpdateHewanView
+import com.example.uaspam.ui.view.kandang.DetailKandangScreen
+import com.example.uaspam.ui.view.kandang.EntryKdgScreen
+import com.example.uaspam.ui.view.kandang.HomeKandangScreen
+import com.example.uaspam.ui.view.kandang.UpdateKandangView
 import com.example.uaspam.ui.view.petugas.DetailPetugasScreen
 import com.example.uaspam.ui.view.petugas.EntryPtgScreen
 import com.example.uaspam.ui.view.petugas.HomePetugasScreen
@@ -31,6 +35,7 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
                     navController.navigate(DestinasiHomeHewan.route)
                 },
                 keKandang = {
+                    navController.navigate(DestinasiHomeKandang.route)
                 },
                 kePetugas = {
                     navController.navigate(DestinasiHomePetugas.route)
@@ -166,6 +171,72 @@ fun PengelolaHalaman(navController: NavHostController = rememberNavController())
         ) {
             UpdatePetugasView(
                 navigateBack = {navController.popBackStack()},
+            )
+        }
+        composable(
+            route = DestinasiHomeKandang.route
+        ) {
+            HomeKandangScreen(
+                navigateBack = {navController.popBackStack()},
+                navigateToItemEntry = {navController.navigate(DestinasiInsertKandang.route)},
+                onDetailClick = { id ->
+                    navController.navigate(("${DestinasiDetailKandang.route}/$id"))
+                }
+            )
+        }
+
+        composable(
+            DestinasiDetailKandang.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiDetailKandang.IDK){
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val id = it.arguments?.getString(DestinasiDetailKandang.IDK)
+            id?.let {
+                DetailKandangScreen(
+                    navigateBack = {
+                        navController.navigate(DestinasiHomeKandang.route) {
+                            popUpTo(DestinasiHomeKandang.route) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onEditClick = {
+                        navController.navigate("${DestinasiUpdateKandang.route}/$id")
+                    },
+                    onDeleteClick = {
+                        navController.navigate(DestinasiHomeKandang.route) {
+                            popUpTo(DestinasiHomeKandang.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
+        }
+
+        composable(DestinasiInsertKandang.route){
+            EntryKdgScreen(navigateBack = {
+                navController.navigate(DestinasiHomeKandang.route){
+                    popUpTo(DestinasiHomeKandang.route){
+                        inclusive = true
+                    }
+                }
+            })
+        }
+
+        composable(
+            DestinasiUpdateKandang.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateKandang.IDK){
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdateKandangView(
+                navigateBack = { navController.popBackStack() },
             )
         }
     }
