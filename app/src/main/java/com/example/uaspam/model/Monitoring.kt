@@ -26,3 +26,18 @@ data class MonitoringFull(
     val Status: String,
 )
 
+@Serializable
+data class MonitoringDetailResponse (
+    val status: Boolean,
+    val message: String,
+    val data4: MonitoringFull
+)
+
+@Serializable
+data class MonitoringResponse (
+    val status: Boolean,
+    val message: String,
+    val data4: List<Monitoring>
+)
+
+
