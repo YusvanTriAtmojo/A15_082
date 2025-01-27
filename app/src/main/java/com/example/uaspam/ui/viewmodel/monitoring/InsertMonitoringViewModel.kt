@@ -1,5 +1,7 @@
 package com.example.uaspam.ui.viewmodel.monitoring
 
+import com.example.uaspam.model.Monitoring
+
 data class InsertMUiState(
     val insertMUiEvent: InsertMUiEvent = InsertMUiEvent(),
     var isEntryValid: FormErrorStatemtr = FormErrorStatemtr(),
@@ -28,4 +30,24 @@ data class InsertMUiEvent(
     val Hewan_sakit: Int = 0,
     val Hewan_sehat: Int = 0,
     val Status: String = ""
+)
+
+fun InsertMUiEvent.toMtr(): Monitoring = Monitoring(
+    Id_monitoring = Id_monitoring,
+    Id_kandang = Id_kandang,
+    Id_petugas = Id_petugas,
+    Tanggal_monitoring = Tanggal_monitoring,
+    Hewan_sakit = Hewan_sakit,
+    Hewan_sehat = Hewan_sehat,
+    Status = Status
+)
+
+fun Monitoring.toInsertMUiEvent(): InsertMUiEvent = InsertMUiEvent(
+    Id_monitoring = Id_monitoring,
+    Id_kandang = Id_kandang,
+    Id_petugas = Id_petugas,
+    Tanggal_monitoring = Tanggal_monitoring,
+    Hewan_sakit = Hewan_sakit,
+    Hewan_sehat = Hewan_sehat,
+    Status = Status
 )
