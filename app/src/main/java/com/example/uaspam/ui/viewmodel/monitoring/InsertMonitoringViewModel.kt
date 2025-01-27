@@ -1,5 +1,11 @@
 package com.example.uaspam.ui.viewmodel.monitoring
 
+data class InsertMUiState(
+    val insertMUiEvent: InsertMUiEvent = InsertMUiEvent(),
+    var isEntryValid: FormErrorStatemtr = FormErrorStatemtr(),
+    val snackBarMessage: String? = null,
+)
+
 data class FormErrorStatemtr(
     val Id_monitoring: String? = null,
     val Id_kandang: String? = null,
