@@ -32,6 +32,10 @@ data class InsertMUiEvent(
     val Status: String = ""
 )
 
+fun Monitoring.toUiStateMtr(): InsertMUiState = InsertMUiState(
+    insertMUiEvent = toInsertMUiEvent()
+)
+
 fun InsertMUiEvent.toMtr(): Monitoring = Monitoring(
     Id_monitoring = Id_monitoring,
     Id_kandang = Id_kandang,
