@@ -41,7 +41,6 @@ class InsertMonitoringViewModel(private val mtr: MonitoringRepository) : ViewMod
     private fun validateFields(): Boolean {
         val event = uiState.insertMUiEvent
         val errorState = FormErrorStatemtr(
-            Id_monitoring = if (event.Id_monitoring.isNotEmpty()) null else "ID tidak boleh kosong",
             Id_kandang = if (event.Id_kandang.isNotEmpty()) null else "ID kandang tidak boleh kosong",
             Id_petugas = if (event.Id_petugas.isNotEmpty()) null else "ID petugas tidak boleh kosong",
             Hewan_sakit = if (event.Hewan_sakit >= 0) null else "Hewan Sakit tidak boleh kosong",
