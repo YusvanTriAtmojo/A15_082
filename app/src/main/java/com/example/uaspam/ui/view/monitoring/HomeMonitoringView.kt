@@ -2,10 +2,12 @@ package com.example.uaspam.ui.view.monitoring
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +30,42 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.uaspam.model.Monitoring
+import com.example.uaspam.ui.viewmodel.monitoring.HomeMUiState
+
+@Composable
+fun HomeMtrStatus(
+    homeMUiState: HomeMUiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    searchText: String,
+    onDetailClick: (String) -> Unit
+) {
+    Card (colors = CardDefaults.cardColors(containerColor = Color(0xFF01A58B))){
+        when (homeMUiState) {
+            is HomeMUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+            is HomeMUiState.Success -> {
+                val filteredMonitoring = homeMUiState.monitoring.filter {
+                    it.Id_monitoring.contains(searchText, ignoreCase = true)
+                }
+                if (filteredMonitoring.isEmpty()) {
+                    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "Tidak ada data Monitoring")
+                    }
+                } else {
+                    MtrLayout(
+                        monitoring = filteredMonitoring,
+                        modifier = modifier.fillMaxWidth(),
+                        onDetailClick = { onDetailClick(it.Id_monitoring) },
+                    )
+                }
+            }
+            is HomeMUiState.Error -> OnError(
+                retryAction,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
