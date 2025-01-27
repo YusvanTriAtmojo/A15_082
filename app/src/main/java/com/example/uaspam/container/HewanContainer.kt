@@ -21,6 +21,7 @@ interface AppContainer{
     val hewanRepository: HewanRepository
     val petugasRepository: PetugasRepository
     val kandangRepository: KandangRepository
+    val monitoringRepository: MonitoringRepository
 }
 
 class HewanContainer: AppContainer {
@@ -52,5 +53,12 @@ class HewanContainer: AppContainer {
 
     override val kandangRepository: KandangRepository by lazy {
         NetworkKandangRepository(kandangService)
+    }
+    private val monitoringService: MonitoringService by lazy {
+        retrofit.create(MonitoringService::class.java)
+    }
+
+    override val monitoringRepository: MonitoringRepository by lazy {
+        NetworkMonitoringRepository(monitoringService)
     }
 }
