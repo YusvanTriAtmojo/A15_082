@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -164,32 +165,39 @@ fun ItemDetailMtr(
                 DetailMonitoringContent(monitoring = monitoring.data4)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Row (modifier = Modifier.padding(start = 128.dp)) {
+            Row (modifier = Modifier.padding(start = 110.dp)) {
                 Button(
                     onClick = onDeleteClick,
                     modifier = Modifier
-                        .size(50.dp)
-                        .background(color = Color(0xFFD20A4E), shape = RoundedCornerShape(10.dp))
+                        .size(70.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFD20A4E),
+                        contentColor = Color.White
+                    ),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",
                         tint = Color.White,
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier
+                            .size(40.dp)
                     )
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
                 Button(
                     onClick = onEditClick,
                     modifier = Modifier
-                        .size(50.dp)
-                        .background(Color(0xFFFFB300), shape = RoundedCornerShape(10.dp))
+                        .size(70.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFB300),
+                    contentColor = Color.White
+                ),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Edit",
                         tint = Color.White,
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(40.dp)
                     )
                 }
             }

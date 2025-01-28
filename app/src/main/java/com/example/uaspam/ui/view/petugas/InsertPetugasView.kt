@@ -191,7 +191,7 @@ fun FormInput(
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            text = "ID Terisi Otomatis",
+            text = "ID Petugas Terisi Otomatis",
             color = Color.Black,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
@@ -218,6 +218,10 @@ fun FormInput(
         Text(
             text = errorState.Nama_petugas ?: "",
             color = Color.Red
+        )
+        Text(
+            text = "Jabatan",
+            color = Color.Black,
         )
         DynamicRadioButton(
             options = Jabatan.listJabatan,

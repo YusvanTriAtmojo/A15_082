@@ -200,7 +200,7 @@ fun FormInput(
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            text = "ID Terisi Otomatis",
+            text = "ID Hewan Terisi Otomatis",
             color = Color.Black,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
