@@ -10,13 +10,10 @@ object DaftarHewan {
     @Composable
     fun ListHewan(
         daftarHwn: HomeHewanViewModel = viewModel(factory = PenyediaViewModel.Factory)
-    ): List<String> {
-        // Mengakses state yang ada di ViewModel
+    ): List<Pair<String, String>> {
         val daftarhewan = daftarHwn.hwnUiState
-
-        // Mengambil daftar hewan jika state adalah Success
         return if (daftarhewan is HomeHUiState.Success) {
-            daftarhewan.hewan.map { it.Id_hewan }
+            daftarhewan.hewan.map { Pair(it.Id_hewan, it.Nama_hewan) }
         } else {
             emptyList()
         }
