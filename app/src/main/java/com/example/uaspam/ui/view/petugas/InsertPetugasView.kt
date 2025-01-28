@@ -43,6 +43,7 @@ import com.example.uaspam.ui.customwidget.CostumeTopAppBar
 import com.example.uaspam.ui.customwidget.DynamicRadioButton
 import com.example.uaspam.ui.customwidget.DynamicSelectedTextField
 import com.example.uaspam.ui.navigation.DestinasiInsertHewan
+import com.example.uaspam.ui.navigation.DestinasiInsertPetugas
 import com.example.uaspam.ui.viewmodel.PenyediaViewModel
 import com.example.uaspam.ui.viewmodel.petugas.FormErrorStateptg
 import com.example.uaspam.ui.viewmodel.petugas.InsertPUiEvent
@@ -76,7 +77,7 @@ fun EntryPtgScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CostumeTopAppBar(
-                title = DestinasiInsertHewan.titleRes,
+                title = DestinasiInsertPetugas.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
