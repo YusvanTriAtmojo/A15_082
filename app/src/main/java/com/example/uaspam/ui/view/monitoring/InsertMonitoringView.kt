@@ -3,8 +3,10 @@ package com.example.uaspam.ui.view.monitoring
 import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -39,9 +41,73 @@ import com.example.uaspam.data.DaftarPetugas
 import com.example.uaspam.ui.customwidget.DynamicSelected
 import com.example.uaspam.ui.viewmodel.monitoring.FormErrorStatemtr
 import com.example.uaspam.ui.viewmodel.monitoring.InsertMUiEvent
+import com.example.uaspam.ui.viewmodel.monitoring.InsertMUiState
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
+@Composable
+fun EntryBody(
+    insertMUiState: InsertMUiState,
+    onValueChange: (InsertMUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    onCancelClick: () -> Unit,
+    additionalText: String = "",
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth()
+    ) {
+        item {
+            Text(
+                text = additionalText,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = Color.Red
+            )
+        }
+        item {
+            FormInput(
+                insertMUiEvent = insertMUiState.insertMUiEvent,
+                onValueChange = onValueChange,
+                errorState = insertMUiState.isEntryValid,
+                modifier = Modifier.fillMaxWidth(),
+                onDismiss = {},
+            )
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically ) {
+                Button(
+                    onClick = onCancelClick,
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF016D47),
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Cancel")
+                }
+                Button(
+                    onClick = onSaveClick,
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF016D47),
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Simpan")
+                }
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
