@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uaspam.data.DaftarHewan
 import com.example.uaspam.ui.customwidget.CostumeTopAppBar
-import com.example.uaspam.ui.customwidget.DynamicSelectedTextField
+import com.example.uaspam.ui.customwidget.DynamicSelected
 import com.example.uaspam.ui.navigation.DestinasiInsertKandang
 import com.example.uaspam.ui.viewmodel.PenyediaViewModel
 import com.example.uaspam.ui.viewmodel.kandang.FormErrorStatekdg
@@ -189,18 +189,18 @@ fun FormInput(
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            text = "ID Terisi Otomatis",
+            text = "ID Kandang Terisi Otomatis",
             color = Color.Black,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        DynamicSelectedTextField(
+        DynamicSelected(
             selectedValue = pilihHewan,
             options = DaftarHewan.ListHewan(),
-            label = "Id Hewan",
+            label = "Hewan",
             onValueChangedEvent = {
                 pilihHewan = it
                 onValueChange(insertKUiEvent.copy(Id_hewan = it))
-            },
+            }
         )
         Text(
             text = errorState.Id_hewan?: "",
