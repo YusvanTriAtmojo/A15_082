@@ -20,31 +20,96 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uaspam.data.DaftarKandang
 import com.example.uaspam.data.DaftarPetugas
+import com.example.uaspam.ui.customwidget.CostumeTopAppBar
 import com.example.uaspam.ui.customwidget.DynamicSelected
+import com.example.uaspam.ui.navigation.DestinasiInsertMonitoring
+import com.example.uaspam.ui.viewmodel.PenyediaViewModel
 import com.example.uaspam.ui.viewmodel.monitoring.FormErrorStatemtr
 import com.example.uaspam.ui.viewmodel.monitoring.InsertMUiEvent
 import com.example.uaspam.ui.viewmodel.monitoring.InsertMUiState
+import com.example.uaspam.ui.viewmodel.monitoring.InsertMonitoringViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EntryMtrScreen(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertMonitoringViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val uiState = viewModel.uiState
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    LaunchedEffect(uiState.snackBarMessage) {
+        uiState.snackBarMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message)
+                viewModel.resetSnackBarMessage()
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiInsertMonitoring.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ) { innerPadding ->
+        EntryBody(
+            additionalText = "Harap Isi Semua Data !",
+            insertMUiState = viewModel.uiState,
+            onValueChange = viewModel::InsertMtrState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertMtr()
+                    navigateBack()
+                }
+            },
+            onCancelClick = {
+                navigateBack()
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxWidth()
+        )
+    }
+}
 
 @Composable
 fun EntryBody(
